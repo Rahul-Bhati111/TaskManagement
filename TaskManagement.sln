@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Infrastructure", "TaskManagement.Infrastructure\TaskManagement.Infrastructure.csproj", "{EF16CB90-0C6A-4DE3-A71F-4D3FDCDEB211}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.TestsAndDatabase", "TaskManagement.TestsAndDatabase\TaskManagement.TestsAndDatabase.csproj", "{FFE28A5F-18F6-4541-A6F2-03A805D6F842}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,10 @@ Global
 		{EF16CB90-0C6A-4DE3-A71F-4D3FDCDEB211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF16CB90-0C6A-4DE3-A71F-4D3FDCDEB211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF16CB90-0C6A-4DE3-A71F-4D3FDCDEB211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE28A5F-18F6-4541-A6F2-03A805D6F842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE28A5F-18F6-4541-A6F2-03A805D6F842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE28A5F-18F6-4541-A6F2-03A805D6F842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE28A5F-18F6-4541-A6F2-03A805D6F842}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
