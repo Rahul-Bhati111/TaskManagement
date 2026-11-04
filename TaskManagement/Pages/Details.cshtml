@@ -1,0 +1,183 @@
+﻿@page "{id:long}"
+@model TaskManagement.Web.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Task Details";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Task #@Model.Input.TaskId</h2>
+            <p class="text-muted">View or update task details.</p>
+        </div>
+
+        <a asp-page="/TaskList" class="btn btn-secondary">
+            Back to Tasks
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <form method="post" asp-route-id="@Model.Input.TaskId">
+
+                <input type="hidden" asp-for="Input.TaskId" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Title" class="form-label">
+                        Task Title *
+                    </label>
+
+                    <input asp-for="Input.Title" class="form-control" />
+
+                    <span asp-validation-for="Input.Title"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Description"
+                           class="form-label">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Input.Description"
+                              class="form-control"
+                              rows="4">
+                    </textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.DueDate"
+                           class="form-label">
+                        Due Date *
+                    </label>
+
+                    <input asp-for="Input.DueDate"
+                           type="datetime-local"
+                           asp-format="{0:yyyy-MM-ddTHH:mm}"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.DueDate"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.PriorityId"
+                           class="form-label">
+                        Priority
+                    </label>
+
+                    <select asp-for="Input.PriorityId"
+                            class="form-select">
+
+                        @if (!Model.Priorities.Any(
+                                                x => x.PriorityId == Model.Input.PriorityId))
+                        {
+                            <option value="@Model.Input.PriorityId">
+                                Current: Inactive priority
+                            </option>
+                        }
+
+                        @foreach (var priority in Model.Priorities)
+                        {
+                            <option value="@priority.PriorityId">
+                                @priority.PriorityName
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="Input.PriorityId"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.AssignedUserId"
+                           class="form-label">
+                        Assigned User
+                    </label>
+
+                    <select asp-for="Input.AssignedUserId"
+                            class="form-select">
+
+                        <option value="">Unassigned</option>
+
+                        @if (Model.Input.AssignedUserId.HasValue &&
+                                                !Model.Users.Any(
+                                                x => x.UserId == Model.Input.AssignedUserId))
+                        {
+                            <option value="@Model.Input.AssignedUserId">
+                                @Model.Input.AssignedUserId - Current inactive user
+                            </option>
+                        }
+
+                        @foreach (var user in Model.Users)
+                        {
+                            <option value="@user.UserId">
+                                @user.FullName
+                            </option>
+                        }
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.StatusId"
+                           class="form-label">
+                        Status
+                    </label>
+
+                    <select asp-for="Input.StatusId"
+                            class="form-select">
+
+                        @if (!Model.Statuses.Any(
+                                                x => x.StatusId == Model.Input.StatusId))
+                        {
+                            <option value="@Model.Input.StatusId">
+                                Current: Inactive status
+                            </option>
+                        }
+
+                        @foreach (var status in Model.Statuses)
+                        {
+                            <option value="@status.StatusId">
+                                @status.StatusName
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="Input.StatusId"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <hr />
+
+                <button type="submit" class="btn btn-primary">
+                    Save Changes
+                </button>
+
+                <a asp-page="/TaskList" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

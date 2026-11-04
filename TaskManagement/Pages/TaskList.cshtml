@@ -1,0 +1,138 @@
+﻿@page
+@model TaskManagement.Web.Pages.TaskListModel
+
+@{
+    ViewData["Title"] = "Task Management";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Task Management</h2>
+
+        <a asp-page="/Create" class="btn btn-primary">
+            + Create Task
+        </a>
+    </div>
+
+    <!-- Filters -->
+    <form method="get" class="card card-body mb-4">
+
+        <div class="row align-items-end">
+
+            <div class="col-md-4">
+                <label class="form-label">Assigned User</label>
+
+                <select name="AssignedUserId" class="form-select">
+                    <option value="">All Users</option>
+
+                    @foreach (var user in Model.Users)
+                    {
+                        <option value="@user.UserId"
+                                selected="@(Model.AssignedUserId == user.UserId)">
+                            @user.FullName
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-check mb-2">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           name="UnassignedOnly"
+                           value="true"
+                           checked="@Model.UnassignedOnly" />
+
+                    <label class="form-check-label">
+                        Show Unassigned Tasks
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">
+                    Apply Filter
+                </button>
+
+                <a asp-page="/TaskList" class="btn btn-secondary">
+                    Reset
+                </a>
+            </div>
+
+        </div>
+    </form>
+
+    <!-- Task Table -->
+    <div class="card">
+
+        <div class="card-header">
+            <strong>Tasks</strong>
+            <span class="badge bg-secondary">
+                @Model.Tasks.Count
+            </span>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover mb-0">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Task ID</th>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Assigned User</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (!Model.Tasks.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center p-4">
+                                No tasks found.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var task in Model.Tasks)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-page="/Details"
+                                       asp-route-id="@task.TaskId"
+                                       class="text-decoration-none">
+                                        @task.Title
+                                    </a>
+                                </td>
+                                <td>@task.Title</td>
+                                <td>@task.DueDate.ToString("dd MMM yyyy")</td>
+                                <td>@task.PriorityName</td>
+                                <td>
+                                    @(task.AssignedUserName ?? "Unassigned")
+                                </td>
+                                <td>@task.StatusName</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
